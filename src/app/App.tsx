@@ -1,14 +1,11 @@
-import { MainPage } from "@/pages/MainPage";
-import { Button } from "@/shared/ui/button";
 import { Navbar } from "@/widgets/Navbar";
+import AppRouter from "./providers/router/ui/AppRouter";
 
 const App = () => {
   return (
     <>
       <Navbar />
-      <MainPage />
-      <h1>Online Store</h1>
-      <Button>fsggrfvgs</Button>
+      <AppRouter />
     </>
   );
 };
