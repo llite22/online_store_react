@@ -1,10 +1,14 @@
+import { SneakerList } from "@/entities/Sneaker/ui/SneakerList/SneakerList";
 import { MainCarousel } from "../MainCarousel/MainCarousel";
 
 const MainPage = () => {
   return (
-    <div className="flex justify-center mt-[45px]">
-      <MainCarousel />
-    </div>
+    <section>
+      <div className="flex justify-center mt-[45px]">
+        <MainCarousel />
+      </div>
+      <SneakerList />
+    </section>
   );
 };
 
