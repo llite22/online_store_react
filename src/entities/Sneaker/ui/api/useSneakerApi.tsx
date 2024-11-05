@@ -1,9 +1,9 @@
 import { $api } from "@/shared/api/api";
-import { useQuery } from "react-query";
 import { SneakerResponce } from "../model/sneaker";
+import { useQuery } from "@tanstack/react-query";
 
 export const useSneakerApi = (title: string, sort: string, page: number) => {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isPending, isError } = useQuery({
     queryKey: ["sneakers", title, sort, page],
     queryFn: async () =>
       await $api.get<SneakerResponce>(
@@ -11,5 +11,5 @@ export const useSneakerApi = (title: string, sort: string, page: number) => {
       ),
     select: (response) => response.data,
   });
-  return { data, isLoading, isError };
+  return { data, isPending, isError };
 };

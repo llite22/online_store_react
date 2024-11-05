@@ -19,7 +19,7 @@ export const SneakerList = () => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const debounceValue = useDebounce<string>(searchValue, 300);
-  const { data, isLoading, isError } = useSneakerApi(
+  const { data, isPending, isError } = useSneakerApi(
     debounceValue,
     sort,
     currentPage
@@ -72,7 +72,7 @@ export const SneakerList = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
-        {isLoading ? (
+        {isPending ? (
           <div className="col-span-4 flex justify-center items-center h-[50vh]">
             <MoonLoader color={"#36d7b7"} loading={true} size={70} />
           </div>
