@@ -4,11 +4,20 @@ import { useSneakerApi } from "../api/useSneakerApi";
 import { ChangeEvent, useState } from "react";
 import { useDebounce } from "@/shared/lib/hooks/useDebounce";
 import { MoonLoader } from "react-spinners";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/shared/ui/select";
 
 export const SneakerList = () => {
+  const [sort, setSort] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
   const debounceValue = useDebounce<string>(searchValue, 300);
-  const { data, isLoading, isError } = useSneakerApi(debounceValue);
+  const { data, isLoading, isError } = useSneakerApi(debounceValue, sort);
 
   const onSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value.toLowerCase());
@@ -20,19 +29,36 @@ export const SneakerList = () => {
         <h2 className="text-3xl font-bold mt-[35px] mb-[35px]">
           Все кроссовки
         </h2>
-        <div className="relative">
-          <img
-            className="absolute left-4 top-3"
-            src="/search.svg"
-            alt="search"
-          />
-          <Input
-            value={searchValue}
-            onChange={onSearchValue}
-            className="border border-gray-400 text-gray-400 rounded-xl py-2 pl-11 pr-4 outline-none focus:border-gray-400"
-            placeholder="Поиск..."
-            type="text"
-          />
+        <div className="flex items-center gap-4">
+          <Select onValueChange={(value) => setSort(value)}>
+            <SelectTrigger className="w-[180px] rounded-xl border-gray-400 text-gray-400">
+              <SelectValue placeholder="Сортировка" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup className="bg-white">
+                <SelectItem className="cursor-pointer" value="price">
+                  По возрастанию
+                </SelectItem>
+                <SelectItem className="cursor-pointer" value="-price">
+                  По убыванию
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+          <div className="relative">
+            <img
+              className="absolute left-4 top-3"
+              src="/search.svg"
+              alt="search"
+            />
+            <Input
+              value={searchValue}
+              onChange={onSearchValue}
+              className="border border-gray-400 text-gray-400 rounded-xl py-2 pl-11 pr-4 outline-none focus:border-gray-400"
+              placeholder="Поиск..."
+              type="text"
+            />
+          </div>
         </div>
       </div>
 
