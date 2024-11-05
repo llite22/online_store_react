@@ -12,15 +12,54 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/shared/ui/pagination";
 
 export const SneakerList = () => {
   const [sort, setSort] = useState<string>("");
   const [searchValue, setSearchValue] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const debounceValue = useDebounce<string>(searchValue, 300);
-  const { data, isLoading, isError } = useSneakerApi(debounceValue, sort);
+  const { data, isLoading, isError } = useSneakerApi(
+    debounceValue,
+    sort,
+    currentPage
+  );
+  const totalPages = (data && data.meta.total_pages) || 1;
+  const pageRange = 2;
 
   const onSearchValue = (event: ChangeEvent<HTMLInputElement>) => {
+    setCurrentPage(1);
     setSearchValue(event.target.value.toLowerCase());
+  };
+
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const getVisiblePages = () => {
+    const startPage = Math.max(currentPage, 1);
+    const endPage = Math.min(currentPage + pageRange - 1, totalPages);
+    const pages = [];
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i);
+    }
+    return pages;
   };
 
   return (
@@ -72,7 +111,8 @@ export const SneakerList = () => {
             Error
           </div>
         ) : (
-          data?.map((sneaker) => (
+          data &&
+          data.items.map((sneaker) => (
             <SneakerCard
               key={sneaker.id}
               id={sneaker.id}
@@ -83,6 +123,55 @@ export const SneakerList = () => {
           ))
         )}
       </div>
+      {totalPages > 1 && (
+        <Pagination className="flex items-center justify-center mt-8">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={currentPage === 1 ? undefined : handlePrevious}
+                className={
+                  currentPage === 1
+                    ? "opacity-50 pointer-events-none"
+                    : "cursor-pointer"
+                }
+              />
+            </PaginationItem>
+
+            {getVisiblePages().map((page) => (
+              <PaginationItem key={page}>
+                <PaginationLink
+                  isActive={page === currentPage}
+                  onClick={() => setCurrentPage(page)}
+                  className={`rounded-xl px-4 py-2 cursor-pointer border border-black ${
+                    page === currentPage
+                      ? "bg-orange-500 text-white hover:bg-orange-700 hover:text-white"
+                      : "hover:bg-orange-700 hover:text-white"
+                  }`}
+                >
+                  {page}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            {currentPage + pageRange - 1 < totalPages && (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            )}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={currentPage >= totalPages ? undefined : handleNext}
+                className={
+                  currentPage >= totalPages
+                    ? "opacity-50 pointer-events-none"
+                    : "cursor-pointer"
+                }
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
     </div>
   );
 };
