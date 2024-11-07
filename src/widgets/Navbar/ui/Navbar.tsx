@@ -1,7 +1,10 @@
+import { getRouteMain } from "@/shared/const/router";
+import { NavLink } from "react-router-dom";
+
 export const Navbar = () => {
   return (
     <header className="flex justify-between border-b border-slate-200 px-10 py-8">
-      <a href="#">
+      <NavLink to={getRouteMain()}>
         <div className="flex items-center">
           <img width="40" src="/logo.png" alt="Logo" />
           <div>
@@ -9,7 +12,7 @@ export const Navbar = () => {
             <p className="text-slate-500">The best online store</p>
           </div>
         </div>
-      </a>
+      </NavLink>
       <ul className="flex items-center gap-10">
         <li className="flex items-center gap-3 cursor-pointer text-gray-500 hover:text-black">
           <img src="/cart.svg" alt="Cart" />

@@ -11,7 +11,7 @@ export const AppRouter = () => {
   return (
     <Suspense
       fallback={
-        <div className="flex w-full justify-center items-center h-[100vh]">
+        <div className="flex w-full justify-center items-center h-[70vh]">
           <MoonLoader color={"#36d7b7"} loading={true} size={70} />
         </div>
       }
