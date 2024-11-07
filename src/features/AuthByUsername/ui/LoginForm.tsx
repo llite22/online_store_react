@@ -55,7 +55,7 @@ const LoginForm = () => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="border-4 border-dashed rounded-lg border-sky-500 p-16"
+          className="border-4 border-double rounded-lg border-orange-500 p-16"
         >
           <div className="min-w-[300px] space-y-8">
             <FormField
@@ -67,7 +67,7 @@ const LoginForm = () => {
                   <FormControl>
                     <Input
                       autoFocus
-                      className="border-4 border-double rounded-lg border-sky-500"
+                      className="border-4 border-double rounded-lg border-orange-500"
                       placeholder="Логин"
                       {...field}
                     />
@@ -84,7 +84,7 @@ const LoginForm = () => {
                   <FormLabel>Пароль</FormLabel>
                   <FormControl>
                     <Input
-                      className="border-4 border-double rounded-lg border-sky-500"
+                      className="border-4 border-double rounded-lg border-orange-500"
                       placeholder="Пароль"
                       type="password"
                       {...field}
@@ -95,7 +95,7 @@ const LoginForm = () => {
               )}
             />
             <Button
-              className="w-full border-4 border-double rounded-lg border-sky-500 bg-blue-800 "
+              className="w-full border-4 border-double rounded-lg border-orange-500 bg-orange-800 text-white"
               type="submit"
             >
               Войти
