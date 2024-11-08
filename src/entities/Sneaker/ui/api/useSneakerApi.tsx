@@ -1,6 +1,6 @@
 import { $api } from "@/shared/api/api";
-import { SneakerResponce } from "../model/sneaker";
 import { useQuery } from "@tanstack/react-query";
+import { SneakerResponce } from "../model/types/sneaker";
 
 export const useSneakerApi = (title: string, sort: string, page: number) => {
   const { data, isPending, isError } = useQuery({

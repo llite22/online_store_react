@@ -82,13 +82,17 @@ export const SneakerList = () => {
           </div>
         ) : data && data.items && data.items.length > 0 ? (
           data.items.map((sneaker) => (
-            <SneakerCard
+            <div
+              className="flex items-center justify-center gap-4"
               key={sneaker.id}
-              id={sneaker.id}
-              title={sneaker.title}
-              price={sneaker.price}
-              imageUrl={sneaker.imageUrl}
-            />
+            >
+              <SneakerCard
+                id={sneaker.id}
+                title={sneaker.title}
+                price={sneaker.price}
+                imageUrl={sneaker.imageUrl}
+              />
+            </div>
           ))
         ) : (
           <div className="col-span-4 flex justify-center items-center h-[50vh]">

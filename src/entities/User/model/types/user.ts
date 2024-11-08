@@ -3,3 +3,8 @@ export interface User {
     username: string
     avatar?: string
 }
+
+export interface UserSchema {
+    token: string
+    data: User
+}

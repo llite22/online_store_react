@@ -1,25 +1,28 @@
+import { SneakerModel } from '@/entities/Sneaker/ui/model/types/sneaker';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface CartStore {
-  addedItems: Record<number, boolean>;
-  toggleItem: (id: number) => void;
+  items: Record<number, boolean>;
+  totalPrice: number;
+  toggleItem: (product: SneakerModel) => void;
 }
 
 export const useCartStore = create<CartStore>()(
   persist(
     (set) => ({
-      addedItems: {},
-      toggleItem: (id: number) => {
+      items: {},
+      totalPrice: 0,
+      toggleItem: (product: SneakerModel) => {
         set((state) => ({
-          addedItems: {
-            ...state.addedItems,
-            [id]: !state.addedItems[id],
+          items: {
+            ...state.items,
+            [product.id]: !state.items[product.id],
           },
+          totalPrice: state.totalPrice + (state.items[product.id] ? -product.price : product.price),
         }));
       },
     }),
     { name: 'cart-storage' }
   )
 );
-

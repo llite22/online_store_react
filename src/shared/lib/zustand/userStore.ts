@@ -8,7 +8,6 @@ interface UserStore {
     clearUser: () => void;
 }
 
-
 export const userStore = create<UserStore>((set) => ({
     user: null,
     setUser: (userData: User) => set({ user: userData }),
